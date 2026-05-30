@@ -21,8 +21,8 @@
     <p>Read More</p>
 </button>
 
-<button class="try" on:click={showAlert}>
-    <p>Try Now</p>
-</button>
+<a class="try" href="/jogar">
+    <p>Play</p>
+</a>
 </div>
 

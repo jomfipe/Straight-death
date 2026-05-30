@@ -1,101 +1,61 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+	import { onMount } from "svelte";
 
-    let playerX = 0;
-    let playerY = 0;
+	let x = 185;
+	let y = 185;
+	const speed = 10;
 
-    const treasureX = 3;
-    const treasureY = 4;
+	function move(event: KeyboardEvent) {
+		switch (event.key) {
+			case "ArrowUp":
+				y -= speed;
+				break;
+			case "ArrowDown":
+				y += speed;
+				break;
+			case "ArrowLeft":
+				x -= speed;
+				break;
+			case "ArrowRight":
+				x += speed;
+				break;
+		}
 
-    const size = 5;
+		// Limites da tela
+		x = Math.max(0, Math.min(x, 370));
+		y = Math.max(0, Math.min(y, 370));
+	}
 
-    function move(event: KeyboardEvent) {
-        switch (event.key) {
-            case "ArrowUp":
-                if (playerY > 0) playerY--;
-                break;
+	onMount(() => {
+		window.addEventListener("keydown", move);
 
-            case "ArrowDown":
-                if (playerY < size - 1) playerY++;
-                break;
-
-            case "ArrowLeft":
-                if (playerX > 0) playerX--;
-                break;
-
-            case "ArrowRight":
-                if (playerX < size - 1) playerX++;
-                break;
-        }
-    }
-
-    onMount(() => {
-        window.addEventListener("keydown", move);
-
-        return () => {
-            window.removeEventListener("keydown", move);
-        };
-    });
+		return () => {
+			window.removeEventListener("keydown", move);
+		};
+	});
 </script>
 
-<h1>Movimente o personagem (P) até o tesouro (T)</h1>
-
-<table>
-    {#each Array(size) as _, y}
-        <tr>
-            {#each Array(size) as _, x}
-                <td
-                    class="cell"
-                    class:character={x === playerX && y === playerY}
-                    class:treasure={x === treasureX && y === treasureY}
-                >
-                    {#if x === playerX && y === playerY}
-                        P
-                    {:else if x === treasureX && y === treasureY}
-                        T
-                    {/if}
-                </td>
-            {/each}
-        </tr>
-    {/each}
-</table>
-
-{#if playerX === treasureX && playerY === treasureY}
-    <h2>Você encontrou o tesouro 🎉</h2>
-{/if}
-
-<br />
-
-<a class="menu" href="/">Voltar ao Menu</a>
+<div class="game-screen">
+	<div
+		class="player"
+		style="left: {x}px; top: {y}px;"
+	></div>
+</div>
 
 <style>
-    table {
-        border-collapse: collapse;
-    }
+	.game-screen {
+		width: 400px;
+		height: 400px;
+		background: black;
+		border: 2px solid white;
+		position: relative;
+		margin: 50px auto;
+	}
 
-    .cell {
-        width: 60px;
-        height: 60px;
-        border: 2px solid black;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .character {
-        background-color: lightblue;
-    }
-
-    .treasure {
-        background-color: gold;
-    }
-
-    h1,
-    h2 {
-        font-family: sans-serif;
-    }
-
-    .menu {
-        font-family: sans-serif;
-    }
+	.player {
+		width: 30px;
+		height: 30px;
+		background: white;
+		position: absolute;
+	}
 </style>
