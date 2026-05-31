@@ -3,7 +3,8 @@
 
 	let x = 185;
 	let y = 185;
-	const speed = 10;
+	const speed = 40;
+    let mapaAtual = 'casa';
 
 	function move(event: KeyboardEvent) {
 		switch (event.key) {
@@ -20,10 +21,7 @@
 				x += speed;
 				break;
 		}
-
-		// Limites da tela
-		x = Math.max(0, Math.min(x, 370));
-		y = Math.max(0, Math.min(y, 370));
+	
 	}
 
 	onMount(() => {
@@ -33,29 +31,52 @@
 			window.removeEventListener("keydown", move);
 		};
 	});
+	
+
 </script>
 
+
 <div class="game-screen">
-	<div
+	<img
+	src="images/Sprites/png/map/house.png"
+		alt="house"
+		class="house"
+	
+	/>
+
+	<img
+		src="/images/Sprites/png/npcs/protagonista.png"
+		alt="Protagonista"
 		class="player"
 		style="left: {x}px; top: {y}px;"
-	></div>
+	/>
 </div>
 
 <style>
-	.game-screen {
-		width: 400px;
-		height: 400px;
+.game-screen {
+		width: 1400px;
+		height: 900px;
 		background: black;
 		border: 2px solid white;
 		position: relative;
 		margin: 50px auto;
 	}
 
-	.player {
-		width: 30px;
-		height: 30px;
-		background: white;
+.house {
+	width: 1400px;
+	height: 900px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	image-rendering: pixelated;
+}
+.player {
+		width: 120px;
+		height: 120px;
 		position: absolute;
+		image-rendering: pixelated;
+		
 	}
+
+
 </style>
