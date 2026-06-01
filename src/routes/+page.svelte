@@ -1,28 +1,40 @@
 <script lang="ts">
-    let gameTitle : string = "Straight"
-    let gameSubtitle : string = "Death"
+	import { goto } from '$app/navigation';
 
-    function showAlert(): void {
-        alert("Still on development!")
-    }
+	const gameTitle: string = "STRAIGHT";
+	const gameSubtitle: string = "DEATH";
 
+	function showAlert(): void {
+		alert("Still on development!");
+	}
 
+     function play(): void {
+	     goto('/play');
+	}
+
+    function credits(): void {
+	     goto('/credits');
+	}
 </script>
 
-<div class="container">
-<h1 class="title">
-    {gameTitle}
-</h1>
-<h2 class="subtitle">
-   {gameSubtitle}
-</h2>
+<div class="menu-background">
+	<div class="container">
+		<h1 class="title">{gameTitle}</h1>
+		<h2 class="subtitle">{gameSubtitle}</h2>
 
-<button class="about" on:click={showAlert}> 
-    <p>Read More</p>
-</button>
+		<button class="play" on:click={play}>
+			<img src="/images/Menu/play.svg" class="play-icon" alt="Play">
+			<p>PLAY</p>
+		</button>
 
-<a class="try" href="/jogar">
-    <p>Play</p>
-</a>
+		<button class="credits" on:click={credits}>
+			<img src="/images/Menu/credits.svg" class="credits-icon" alt="Credits">
+			<p>CREDITS</p>
+		</button>
+
+		<button class="leave" on:click={showAlert}>
+			<img src="/images/Menu/leave.svg" class="leave-icon" alt="Leave">
+			<p>LEAVE GAME</p>
+		</button>
+	</div>
 </div>
-

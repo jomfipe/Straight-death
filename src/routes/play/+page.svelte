@@ -45,7 +45,7 @@
 	/>
 
 	<img
-		src="/images/Sprites/png/npcs/protagonista.png"
+		src="/images/Sprites/png/npcs/protagonista/frente-0001.png"
 		alt="Protagonista"
 		class="player"
 		style="left: {x}px; top: {y}px;"
@@ -71,8 +71,8 @@
 	image-rendering: pixelated;
 }
 .player {
-		width: 120px;
-		height: 120px;
+		width: 128px;
+		height: 256px;
 		position: absolute;
 		image-rendering: pixelated;
 		

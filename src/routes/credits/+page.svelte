@@ -1,6 +1,6 @@
 <h1>Sobre</h1>
 
-<img class="sobre" src="/images/logoIFPE.png" alt="logo IPFE"/>
+<img class="sobre" src="/images/Credits/logo-ifpe.svg" alt="logo IPFE"/>
 
 <p>
     Autor: Allan Diego Silva Lima
