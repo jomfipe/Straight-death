@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  function handleKey(event: KeyboardEvent) {
+  function handleKey(event: KeyboardEvent): void {
     if (event.key === 'Escape') goto('/');
   }
 </script>

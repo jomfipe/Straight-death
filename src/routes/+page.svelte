@@ -1,18 +1,18 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
 
-  const gameTitle = "STRAIGHT";
-  const gameSubtitle = "DEATH";
+  const gameTitle: string = "STRAIGHT";
+  const gameSubtitle: string = "DEATH";
 
-  function showAlert() {
+  function showAlert(): void {
     alert("Still on development!");
   }
 
-  function play() {
+  function play(): void {
     goto('/play');
   }
 
-  function credits() {
+  function credits(): void   {
     goto('/credits');
   }
 </script>
