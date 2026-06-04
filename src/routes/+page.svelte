@@ -1,37 +1,39 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
 
-  const gameTitle: string = "STRAIGHT";
-  const gameSubtitle: string = "DEATH";
+  let selected = 0;
+  const items = ['PLAY', 'CREDITS', 'EXIT'];
 
-  function showAlert(): void {
-    alert("Still on development!");
+  function handleClick(index: number) {
+    selected = index;
+    if (index === 0) goto('/play');
+    if (index === 1) goto('/credits');
+    if (index === 2) alert('Still in development!');
   }
 
-  function play(): void {
-    goto('/play');
-  }
-
-  function credits(): void   {
-    goto('/credits');
+  function handleKey(e: KeyboardEvent) {
+    if (e.key === 'ArrowDown') selected = (selected + 1) % 3;
+    if (e.key === 'ArrowUp') selected = (selected + 2) % 3;
+    if (e.key === 'Enter') handleClick(selected);
   }
 </script>
 
+<svelte:window on:keydown={handleKey} />
+
 <div class="menu-background">
-  <div class="container">
-    <h1 class="title">{gameTitle}</h1>
-    <h2 class="subtitle">{gameSubtitle}</h2>
-    <button class="play" on:click={play}>
-      <img src="/images/Menu/play.svg" class="play-icon" alt="Play" />
-      <p>PLAY</p>
-    </button>
-    <button class="credits" on:click={credits}>
-      <img src="/images/Menu/credits.svg" class="credits-icon" alt="Credits" />
-      <p>CREDITS</p>
-    </button>
-    <button class="leave" on:click={showAlert}>
-      <img src="/images/Menu/leave.svg" class="leave-icon" alt="Leave" />
-      <p>LEAVE GAME</p>
-    </button>
+  <img src="/images/Menu/logo.png" alt="Game Logo" class="logo" />
+  <div class="menu-box">
+    {#each items as item, i}
+      <button class="menu-button" class:active={selected === i} on:click={() => handleClick(i)}>
+        <span class="arrow">◀</span>
+        <span class="label">{item}</span>
+        <span class="arrow">▶</span>
+      </button>
+    {/each}
+  </div>
+  <div class="hint">
+    <p>press</p>
+    <span class="key">ENTER</span>
+    <p>to select</p>
   </div>
 </div>

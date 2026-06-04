@@ -1,194 +1,220 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 
 .credits-background {
-    width: 100vw;
-    height: 100vh;
-
-    background-image: url('/images/Credits/background.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/Credits/background.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  position: relative;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-top: 40px;
-    width: 750px; /* limita a largura igual ao figma */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  width: clamp(320px, 50vw, 750px);
+  padding-bottom: 120px;
 }
 
 .logo-ifpe {
-    width: 90px;
-    height: auto;
-    margin-bottom: 20px;
+  width: clamp(60px, 6vw, 90px);
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .box {
-    display: flex;
-    padding: 24.661px 49.323px;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    align-self: stretch;
-
-    border-radius: 18.496px;
-    border: 3.083px solid #FFF3CA;
-    background: linear-gradient(2deg, #2D0038 1.42%, #18101A 98.7%);
+  display: flex;
+  padding: clamp(16px, 2vh, 24px) clamp(20px, 3.5vw, 49px);
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 18.496px;
+  border: 3.083px solid #FFF3CA;
+  background: linear-gradient(2deg, #2D0038 1.42%, #18101A 98.7%);
 }
 
 .box-thanks {
-    display: flex;
-    padding: 24.307px 48.613px;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    align-self: stretch;
-
-    border-radius: 18.23px;
-    border: 3.038px solid #FFF3CA;
-    background: linear-gradient(180deg, #2D0038 0.2%, #18101A 99.8%);
+  display: flex;
+  padding: clamp(16px, 2vh, 24px) clamp(20px, 3.5vw, 49px);
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  border-radius: 18.23px;
+  border: 3.038px solid #FFF3CA;
+  background: linear-gradient(180deg, #2D0038 0.2%, #18101A 99.8%);
 }
 
 .team-row {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 2.5vw, 40px);
+  flex-wrap: wrap;
+}
+  
+.team-row-centered {
+  justify-content: center;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 2vw, 32px);
+  width: 100%;
+  justify-items: center;
+}
+
+.team-row-bottom {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 32px);
+  width: 100%;
+}
+
+.team-grid .member:nth-child(4) {
+  grid-column: 1 / 2;
+  justify-self: center;
+  margin-left: 50%;
+}
+
+.team-grid .member:nth-child(5) {
+  grid-column: 2 / 3;
+  justify-self: center;
+  margin-right: 50%;
 }
 
 .member {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 .role {
-    color: #DF60FF;
-    font-family: "Pixelify Sans";
-    font-size: 20px;
-    font-weight: 400;
-    margin: 0;
-    text-align: center;
+  color: #DF60FF;
+  font-family: "Pixelify Sans";
+  font-size: clamp(12px, 1.4vw, 20px);
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 }
 
 .credits-title {
-    color: #FFF3CA;
-    font-family: "Pixelify Sans";
-    font-size: 64px;
-	left: 76px;
-	top: 76px; /* distância da esquerda */
-    position:absolute;
-    margin: 0;
+  color: #FFF3CA;
+  font-family: "Pixelify Sans";
+  font-size: clamp(36px, 4.5vw, 64px);
+  left: 76px;
+  top: 76px;
+  position: absolute;
+  margin: 0;
 }
 
 .instituto {
-    color: #FFF3CA;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 30.827px;
-    font-weight: 400;
-    margin: 0;
-    position: absolute;
-    top: 130px; /* distância da esquerda */
-    /* REMOVE position: absolute, top */
+  color: #FFF3CA;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(16px, 2vw, 30.827px);
+  font-weight: 400;
+  margin: 0;
+  margin-top: -40px;
 }
-
 .estado {
-    color: #DF60FF;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 24px;
-    font-weight: 400;
-    margin: 0;
-    /* REMOVE position: absolute, top */
+  color: #DF60FF;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(14px, 1.6vw, 24px);
+  font-weight: 400;
+  margin: 0;
+  margin-top: -15px;
 }
-
 
 .dev {
-    color: #DF60FF;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 49.323px;
-    font-weight: 400;
-    margin: 0;
+  color: #DF60FF;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(24px, 3vw, 49.323px);
+  font-weight: 400;
+  margin: 0;
 }
 
 .thanks {
-    color: #DF60FF;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 36px;
-    font-weight: 400;
-    margin: 0;
+  color: #DF60FF;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(20px, 2.5vw, 36px);
+  font-weight: 400;
+  margin: 0;
 }
 
-.thanks2 {
-    color: #FFF;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 32px;
-    font-weight: 400;
-    margin: 0;
+.thanks-description {
+  color: #FFF;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(16px, 2vw, 32px);
+  font-weight: 400;
+  margin: 0;
 }
 
 .fabricio, .joao, .matias, .fagner, .gabriel {
-    color: #FFF3CA;
-    text-align: center;
-    font-family: "Pixelify Sans";
-    font-size: 30.827px;
-    font-weight: 400;
-    line-height: normal;
-    margin: 0;
+  color: #FFF3CA;
+  text-align: center;
+  font-family: "Pixelify Sans";
+  font-size: clamp(14px, 1.8vw, 30.827px);
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
 }
 
 .fabricio-pic, .joao-pic, .matias-pic, .fagner-pic, .gabriel-pic {
-    width: 98.546px;
-    height: 97.973px;
-    border-radius: 157.216px;
-    border: 2.312px solid #C100F1;
+  width: clamp(60px, 6.5vw, 98.546px);
+  height: clamp(60px, 6.5vw, 97.973px);
+  border-radius: 157.216px;
+  border: 2.312px solid #C100F1;
 }
-
 
 .esc {
-    position: absolute;
-    top: 1040px;
-    left: 33%;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
 
-    display: flex;
-    align-items: center;
-    gap: 60px;
-}
-
-.key {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 6px 10px;
-    border: 3px solid #FFF3CA;
-    border-radius: 4px;
-
-    color: #FFF3CA;
-    font-family: "Pixelify Sans";
-    font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  white-space: nowrap;
 }
 
 .esc p {
-    color: #FFF3CA;
-    font-family: "Pixelify Sans";
-    font-size: 48px;
-    font-weight: 400;
-    margin: 0;
+  color: #FFF3CA;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
+  font-weight: 400;
+  margin: 0;
 }
 
 .esc img {
-    width: 58px;
-    height: 51px;
+  width: clamp(20px, 2.5vw, 48px);
+  height: auto;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border: 3px solid #DF60FF;
+  border-radius: 4px;
+  color: #DF60FF;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
 }

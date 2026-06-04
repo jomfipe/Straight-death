@@ -1,5 +1,5 @@
 <script>
-    import "../../styles/jogar.css"
+    import "../../styles/play.css"
 </script>
 
 <slot />

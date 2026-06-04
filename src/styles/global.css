@@ -1,280 +1,113 @@
-@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400..700&display=swap');
 
 html, body {
-	position: relative;
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	color: #333;
-	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	background: #000;
-	text-align: center;
+    background: black;
 }
 
 .menu-background {
-	width: 100vw;
-	height: 100vh;
-
-	background-image: url('/images/Menu/background.png');
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-}
-
-
-h1 {
- 	color: purple;
- 	font-weight: bold;
- 	font-family: verdana;
-}
-
-.menu {
-	display: block;
-	font-size: 20px;
-	margin: auto;
-	margin-bottom: 5px;
-	border-style: solid;
-	border-width: 3px;
-	width: 20%;
-	padding: 5px;
-	background-color: rgb(255, 255, 255);
-	border: 3px solid black;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	padding: 5px 0px 5px 0px;
-}
-
-.container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('/images/Menu/background.png') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
 }
 
 .logo {
-    width: 50px;
-    height: 55px;
-
-    background-image: url('/images/info.png');
-    background-repeat: no-repeat;
-	position: absolute;
-    top: 10px;
-    left: 35px;
+    width: 26vw;
+    height: auto;
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.title {
-	color: #FFF;
-	font-family: "Protest Revolution", sans-serif;
-	font-size: 92.526px;
-	margin: 0;
-	position: absolute;
-	top: 85px;
-	left: 291.4161px;
+.menu-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+    padding: 3vh 5vw;
+    border-radius: 18px;
+    border: 3px solid #FFF3CA;
+    background: linear-gradient(2deg, #2D0038 1.42%, #18101A 98.7%);
+    min-width: 30vw;
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translate(-50%, -50%);
 }
 
-.subtitle {
-	font-family: "Rubik Wet Paint", system-ui;
-	font-size: 236.867px;
-	font-weight: 400;
-	line-height: 118.547%;
-
-	background: linear-gradient(180deg, #C0F 0%, #7A0099 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-
-	margin: 0;
-	margin-top: -20px;
-	position: absolute;
-	top: 162.6412px;
-	left: 64px;
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vw;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Pixelify Sans', monospace;
+    font-size: clamp(24px, 3vw, 48px);
+    letter-spacing: 2px;
+    color: #FFF3CA;
+    padding: 8px 22px;
+    transition: 0.15s ease;
+    width: 100%;
 }
 
-.play {
-	display: flex;
-	align-items: center;
-	gap: 23px;
-
-	background: transparent;
-	border: none;
-	outline: none;
-	box-shadow: none;
-
-	position: absolute;
-	left: 100px;
-	top: 450px; /* distância da esquerda */
-	font-family: "Inria Sans", sans-serif;
-	cursor: pointer;
+.menu-button.active {
+    border: 2px dashed #cc44cc;
+    color: #DF60FF;
+    text-shadow: 0 0 8px #cc44cc88;
 }
 
-.play-icon {
-    width: 40px;
-    height: 40px;
-    transition: all 0.3s ease;
+.arrow {
+    color: #cc44cc;
+    opacity: 0;
+    font-size: clamp(18px, 2vw, 36px);
+    transition: opacity 0.15s;
 }
 
-.play p {
-    transition: all 0.3s ease;
-	color: white;
-	font-family: "Inria Sans", sans-serif;
-	font-size: 32.1041px;
+.menu-button.active .arrow {
+    opacity: 1;
 }
 
-.play:hover {
-    border-color: #ff00ff;
-
-    box-shadow:
-        0 0 10px rgba(255, 0, 255, 0.5),
-        inset 0 0 10px rgba(255, 0, 255, 0.2);
-
-    background: rgba(255, 0, 255, 0.08);
+.hint {
+    position: absolute;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    white-space: nowrap;
 }
 
-.play:hover p {
-    color: #ff00ff;
-
-    text-shadow:
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff;
+.hint p {
+    color: #FFF3CA;
+    font-family: 'Pixelify Sans', monospace;
+    font-size: clamp(20px, 2.5vw, 48px);
+    font-weight: 400;
+    margin: 0;
 }
 
-.play:hover .about-icon {
-    filter:
-	    drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 4px #ff00ff)
-        drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 12px #ff00ff);
-}
-
-.credits {
-	display: flex;
-	align-items: center;
-	gap: 23px;
-
-	background: transparent;
-	border: none;
-	outline: none;
-	box-shadow: none;
-
-	position: absolute;
-	left: 100px;
-	top: 550px; /* distância da esquerda */
-	font-family: "Inria Sans", sans-serif;
-	cursor: pointer;
-}
-
-.credits-icon {
-    width: 40px;
-    height: 40px;
-    transition: all 0.3s ease;
-}
-
-.credits p {
-    transition: all 0.3s ease;
-	color: white;
-	font-family: "Inria Sans", sans-serif;
-	font-size: 32.1041px;
-}
-
-.credits:hover {
-    border-color: #ff00ff;
-
-    box-shadow:
-        0 0 10px rgba(255, 0, 255, 0.5),
-        inset 0 0 10px rgba(255, 0, 255, 0.2);
-
-    background: rgba(255, 0, 255, 0.08);
-}
-
-.credits:hover p {
-    color: #ff00ff;
-
-    text-shadow:
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff;
-}
-
-.credits:hover .about-icon {
-    filter:
-	    drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 4px #ff00ff)
-        drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 12px #ff00ff);
-}
-
-.leave {
-	display: flex;
-	align-items: center;
-	gap: 23px;
-
-	background: transparent;
-	border: none;
-	outline: none;
-	box-shadow: none;
-
-	position: absolute;
-	left: 100px;
-	top: 650px; /* distância da esquerda */
-	font-family: "Inria Sans", sans-serif;
-	cursor: pointer;
-}
-
-.leave-icon {
-    width: 40px;
-    height: 40px;
-    transition: all 0.3s ease;
-}
-
-.leave p {
-    transition: all 0.3s ease;
-	color: white;
-	font-family: "Inria Sans", sans-serif;
-	font-size: 32.1041px;
-}
-
-.leave:hover {
-    border-color: #ff00ff;
-
-    box-shadow:
-        0 0 10px rgba(255, 0, 255, 0.5),
-        inset 0 0 10px rgba(255, 0, 255, 0.2);
-
-    background: rgba(255, 0, 255, 0.08);
-}
-
-.leave:hover p {
-    color: #ff00ff;
-
-    text-shadow:
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff;
-}
-
-.leave:hover .about-icon {
-    filter:
-	    drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 4px #ff00ff)
-        drop-shadow(0 0 8px #ff00ff)
-        drop-shadow(0 0 12px #ff00ff);
-}
-
-.menu:hover{
-	background-color: #aaa;
-}
-
-.menu:visited{
-	color: black;
-}
-
-img.sobre {
-	max-width:25%;
-	max-height:25%;
+.key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border: 3px solid #DF60FF;
+    border-radius: 4px;
+    color: #DF60FF;
+    font-family: 'Pixelify Sans', monospace;
+    font-size: clamp(20px, 2.5vw, 48px);
 }
