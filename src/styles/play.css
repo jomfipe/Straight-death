@@ -44,6 +44,13 @@ td.treasure {
     top: 0;
     image-rendering: pixelated;
 }
+.chest {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    image-rendering: pixelated;
+    z-index: 5;
+}
 
 .player {
     width: 64px;
@@ -53,6 +60,7 @@ td.treasure {
     transition: left 0.08s linear, top 0.08s linear;
     z-index: 10;
 }
+
 
 .debug {
     position: fixed;

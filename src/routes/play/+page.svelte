@@ -7,8 +7,49 @@
 	let y = 745;
     const speed = 12;
 
-	function handleKey(event: KeyboardEvent): void {
-    if (event.key === 'Escape') goto('/');
+	const ChestX = 44;
+	const ChestY = 385;
+	const ChestFechadoSprite = "/images/Sprites/png/objects/Chest.png";
+	const ChestAbertoSprite = "/images/Sprites/png/objects/Chest-open.png";
+	let ChestSprite = ChestFechadoSprite;
+	let ChestOpen = false;
+	
+	function nearthechest(): boolean {
+	return (
+		Math.abs(x - ChestX) < 80 &&
+		Math.abs(y - ChestY) < 80
+	);
+}function colidiuwithChest(newX: number, newY: number): boolean {
+	const playerSize = 64;
+
+	const hitboxX = ChestX + 1;
+	const hitboxY = ChestY + 5;
+	const hitboxWidth = 30;
+	const hitboxHeight = 20;
+
+	return (
+		newX < hitboxX + hitboxWidth &&
+		newX + playerSize > hitboxX &&
+		newY < hitboxY + hitboxHeight &&
+		newY + playerSize > hitboxY
+	);
+
+
+
+}function handleKey(event: KeyboardEvent): void {
+	if (event.key === 'Escape') {
+		goto('/');
+	}
+
+	if (
+		event.key.toLowerCase() === 'x' &&
+		nearthechest() &&
+		!ChestOpen
+	) {
+		ChestOpen = true;
+		ChestSprite = ChestAbertoSprite;
+	}
+
   }
 
   
@@ -114,11 +155,19 @@ function podeAndar(newX: number, newY: number): boolean {
                 return;
         }
 
-        
- if (podeAndar(newX, newY)) {
+ if (
+	podeAndar(newX, newY) &&
+	!colidiuwithChest(newX, newY)
+) {
 	x = newX;
 	y = newY;
-}       
+
+	// Se saiu de perto do baú, ele fecha
+	if (!nearthechest() && ChestOpen) {
+		ChestOpen = false;
+		ChestSprite = ChestFechadoSprite;
+	}
+}
     }
 
     onMount(() => {
@@ -127,6 +176,8 @@ function podeAndar(newX: number, newY: number): boolean {
             window.removeEventListener("keydown", move);
         };
     });
+
+
 </script>
 
 <svelte:window on:keydown={handleKey} />
@@ -144,7 +195,12 @@ function podeAndar(newX: number, newY: number): boolean {
         alt="player"
         class="player"
         style="left: {x}px; top: {y}px;"
-    />
+    /><img
+    src={ChestSprite}
+    alt="Chest"
+    class="chest"
+    style="left: {ChestX}px; top: {ChestY}px;"
+/>
 	<div class="debug">
 	X: {x}<br>
 	Y: {y}<br>
