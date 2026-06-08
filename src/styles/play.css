@@ -60,7 +60,13 @@ td.treasure {
     transition: left 0.08s linear, top 0.08s linear;
     z-index: 10;
 }
-
+.npc {
+	width: 64px;
+	height: 64px;
+	position: absolute;
+	image-rendering: pixelated;
+	z-index: 6;
+}
 
 .debug {
     position: fixed;

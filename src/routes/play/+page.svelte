@@ -1,42 +1,37 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
     import { onMount } from "svelte";
+	import { podeAndar } from "$lib/maps/mausoleum";
+	import { playerConfig } from '$lib/entities/player';
+    import { chest } from '$lib/entities/chest';
+	import { npc } from '$lib/entities/npc';
+    import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
+    
+   	
+	let x = playerConfig.x;
+	let y = playerConfig.y;
 
-    // Posição inicial: Centralizado no primeiro degrau da escada de entrada
-   	let x = 560;
-	let y = 745;
-    const speed = 12;
-
-	const ChestX = 44;
-	const ChestY = 385;
-	const ChestFechadoSprite = "/images/Sprites/png/objects/Chest.png";
-	const ChestAbertoSprite = "/images/Sprites/png/objects/Chest-open.png";
-	let ChestSprite = ChestFechadoSprite;
-	let ChestOpen = false;
+	const speed = playerConfig.speed;
+	const sprites = playerConfig.sprites;
 	
+	const ChestX = chest.x;
+	const ChestY = chest.y;
+	const ChestFechadoSprite = chest.spriteClosed;
+	const ChestAbertoSprite = chest.spriteOpen;
+	let ChestSprite = chest.spriteClosed;
+	let ChestOpen = false;
+
+	const npcX = npc.x;
+	const npcY = npc.y;
+	const npcSprite = npc.sprite;
+
 	function nearthechest(): boolean {
 	return (
 		Math.abs(x - ChestX) < 80 &&
 		Math.abs(y - ChestY) < 80
 	);
-}function colidiuwithChest(newX: number, newY: number): boolean {
-	const playerSize = 64;
-
-	const hitboxX = ChestX + 1;
-	const hitboxY = ChestY + 5;
-	const hitboxWidth = 30;
-	const hitboxHeight = 20;
-
-	return (
-		newX < hitboxX + hitboxWidth &&
-		newX + playerSize > hitboxX &&
-		newY < hitboxY + hitboxHeight &&
-		newY + playerSize > hitboxY
-	);
-
-
-
-}function handleKey(event: KeyboardEvent): void {
+}
+function handleKey(event: KeyboardEvent): void {
 	if (event.key === 'Escape') {
 		goto('/');
 	}
@@ -57,76 +52,8 @@
 	type Direction = "front" | "back" | "left" | "right";
 	let direction: Direction = "front";
     // Supondo que você tenha os sprites nessas pastas
-    const sprites = {
-        front: "/images/Sprites/png/npcs/protagonista/frente-0001.png",
-        back: "/images/Sprites/png/npcs/protagonista/costas-1.png",
-        left: "/images/Sprites/png/npcs/protagonista/ladoesquerdo-1.png",
-        right: "/images/Sprites/png/npcs/protagonista/ladodireito-1.png",
-    };
-function podeAndar(newX: number, newY: number): boolean {
-
-	// Caminho 1 - Entrada
-	if (
-		newX >= 368 && newX <= 884 &&
-		newY >= 757 && newY <= 805
-	) return true;
-
-	// Caminho 2 - Corredor central
-	if (
-		newX >= 548 && newX <= 644 &&
-		newY >= 577 && newY <= 745
-	) return true;
-
-	// Caminho 3
-	if (
-		newX >= 476 && newX <= 716 &&
-		newY >= 517 && newY <= 577
-	) return true;
-
-	// Caminho 4 - Bifurcação
-	if (
-		newX >= 344 && newX <= 740 &&
-		newY >= 481 && newY <= 517
-	) return true;
-
-	// Caminho 5
-	if (
-		newX >= 476 && newX <= 740 &&
-		newY >= 445 && newY <= 481
-	) return true;
-
-	// Caminho 6 - Corredor das pilastras
-	if (
-		newX >= 572 && newX <= 620 &&
-		newY >= 301 && newY <= 445
-	) return true;
-
-	// Caminho 7 - Portal
-	if (
-		newX >= 536 && newX <= 656 &&
-		newY >= 193 && newY <= 289
-	) return true;
-
-	// Entrada da sala dos baús
-	if (
-		newX >= 308 && newX <= 332 &&
-		newY >= 372 && newY <= 565
-	) return true;
-
-	// Sala dos baús
-	if (
-		newX >= 56 && newX <= 296 &&
-		newY >= 361 && newY <= 586
-	) return true;
-
-	// Final da sala dos baús
-	if (
-		newX >= 20 && newX <= 56 &&
-		newY >= 372 && newY <= 565
-	) return true;
-
-	return false;
-}    function move(event: KeyboardEvent): void {
+    
+  function move(event: KeyboardEvent): void {
         let newX = x;
         let newY = y;
 
@@ -153,11 +80,11 @@ function podeAndar(newX: number, newY: number): boolean {
                 break;
             default:
                 return;
-        }
-
- if (
+        }if (
 	podeAndar(newX, newY) &&
-	!colidiuwithChest(newX, newY)
+	!colidiuWithChest(newX, newY) &&
+	!colidiuWithNpc(newX, newY)
+
 ) {
 	x = newX;
 	y = newY;
@@ -176,6 +103,8 @@ function podeAndar(newX: number, newY: number): boolean {
             window.removeEventListener("keydown", move);
         };
     });
+
+
 
 
 </script>
@@ -201,6 +130,13 @@ function podeAndar(newX: number, newY: number): boolean {
     class="chest"
     style="left: {ChestX}px; top: {ChestY}px;"
 />
+<img
+	src={npcSprite}
+	alt="NPC"
+	class="npc"
+	style="left: {npcX}px; top: {npcY}px;"
+/>
+
 	<div class="debug">
 	X: {x}<br>
 	Y: {y}<br>
