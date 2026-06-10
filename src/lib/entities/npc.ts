@@ -11,4 +11,5 @@ export const npc = {
         width: 44,
         height: 44
     }
+    
 };

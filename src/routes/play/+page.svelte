@@ -5,8 +5,9 @@
 	import { playerConfig } from '$lib/entities/player';
     import { chest } from '$lib/entities/chest';
 	import { npc } from '$lib/entities/npc';
-    import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
     
+    import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
+   
    	
 	let x = playerConfig.x;
 	let y = playerConfig.y;
@@ -24,11 +25,18 @@
 	const npcX = npc.x;
 	const npcY = npc.y;
 	const npcSprite = npc.sprite;
+    let mostrarDialogoNpc = false;
 
 	function nearthechest(): boolean {
 	return (
 		Math.abs(x - ChestX) < 80 &&
 		Math.abs(y - ChestY) < 80
+	);
+}
+function nearNpc(): boolean {
+	return (
+		Math.abs(x - npc.x) < 80 &&
+		Math.abs(y - npc.y) < 80
 	);
 }
 function handleKey(event: KeyboardEvent): void {
@@ -44,7 +52,13 @@ function handleKey(event: KeyboardEvent): void {
 		ChestOpen = true;
 		ChestSprite = ChestAbertoSprite;
 	}
-
+    
+    if (
+	event.key.toLowerCase() === 'x' &&
+	nearNpc()
+) {
+	mostrarDialogoNpc = true;
+}
   }
 
   
@@ -80,22 +94,24 @@ function handleKey(event: KeyboardEvent): void {
                 break;
             default:
                 return;
-        }if (
-	podeAndar(newX, newY) &&
-	!colidiuWithChest(newX, newY) &&
-	!colidiuWithNpc(newX, newY)
+        }if (colidiuWithNpc(newX, newY)) {
+	    return;
+}
 
+if (
+	podeAndar(newX, newY) &&
+	!colidiuWithChest(newX, newY)
 ) {
 	x = newX;
 	y = newY;
-
+}
 	// Se saiu de perto do baú, ele fecha
 	if (!nearthechest() && ChestOpen) {
 		ChestOpen = false;
 		ChestSprite = ChestFechadoSprite;
 	}
 }
-    }
+    
 
     onMount(() => {
         window.addEventListener("keydown", move);
@@ -144,3 +160,17 @@ function handleKey(event: KeyboardEvent): void {
 </div>
 
 </div>
+{#if mostrarDialogoNpc}
+	<div class="dialogo">
+		<p>
+			Olá viajante! O portal está selado.Para Prosseguir, pegue o amuleto que está
+            dentro do baú. Você precisará dele para enfrentar os desafios que estão por vir. Boa sorte!
+		</p>
+
+		<button
+			on:click={() => mostrarDialogoNpc = false}
+		>
+			Fechar
+		</button>
+	</div>
+{/if}
