@@ -30,7 +30,7 @@
     <div class="member">
       <img src="/images/Credits/matias.svg" class="matias-pic" />
       <p class="matias">MATIAS LOPES</p>
-      <p class="role">Programmer</p>
+      <p class="role">Story</p>
     </div>
   </div>
   <div class="team-row-bottom">

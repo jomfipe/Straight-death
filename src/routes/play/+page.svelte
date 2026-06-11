@@ -66,7 +66,7 @@ function handleKey(event: KeyboardEvent): void {
   
 
 	type Direction = "front" | "back" | "left" | "right";
-	let direction: Direction = "front";
+	let direction: Direction = "back";
     // Supondo que você tenha os sprites nessas pastas
     
   function move(event: KeyboardEvent): void {

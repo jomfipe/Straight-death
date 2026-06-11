@@ -2,6 +2,7 @@ type PlayerConfig = {
     x: number;
     y: number;
     speed: number;
+    direction: "front" | "back" | "left" | "right";
     sprites: {
         front: string;
         back: string;
@@ -11,9 +12,10 @@ type PlayerConfig = {
 };
 
 export const playerConfig: PlayerConfig = {
-    x: 560,
-    y: 745,
+    x: 596,
+    y: 805,
     speed: 12,
+    direction: "back",
 
     sprites: {
         front: "/images/Sprites/png/npcs/protagonista/frente-0001.png",
