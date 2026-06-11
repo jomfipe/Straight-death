@@ -1,93 +1,77 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
     import { onMount } from "svelte";
+	import { podeAndar } from "$lib/maps/mausoleum";
+	import { playerConfig } from '$lib/entities/player';
+    import { chest } from '$lib/entities/chest';
+	import { npc } from '$lib/entities/npc';
+    
+    import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
+   
+   	
+	let x: number = playerConfig.x;
+	let y: number = playerConfig.y;
 
-    // Posição inicial: Centralizado no primeiro degrau da escada de entrada
-   	let x = 560;
-	let y = 745;
-    const speed = 12;
+	const speed: number = playerConfig.speed;
+	const sprites: { front: string; back: string; left: string; right: string } = playerConfig.sprites;
+	
+	const ChestX: number = chest.x;
+	const ChestY: number = chest.y;
+	const ChestFechadoSprite: string = chest.spriteClosed;
+	const ChestAbertoSprite: string = chest.spriteOpen;
+	let ChestSprite: string = chest.spriteClosed;
+	let ChestOpen: boolean = false;
 
-	function handleKey(event: KeyboardEvent): void {
-    if (event.key === 'Escape') goto('/');
-  }
+	const npcX: number = npc.x;
+	const npcY: number = npc.y;
+	const npcSprite: string = npc.sprite;
+    let mostrarDialogoNpc: boolean = false;
+
+	function nearthechest(): boolean {
+	return (
+		Math.abs(x - ChestX) < 80 &&
+		Math.abs(y - ChestY) < 80
+	);
+}
+function nearNpc(): boolean {
+	return (
+		Math.abs(x - npc.x) < 80 &&
+		Math.abs(y - npc.y) < 80
+	);
+}
+function handleKey(event: KeyboardEvent): void {
+	if (event.key === 'Escape') {
+		goto('/');
+	}
+
+	if (
+		event.key.toLowerCase() === 'x' &&
+		nearthechest() &&
+		!ChestOpen
+	) {
+		ChestOpen = true;
+		ChestSprite = ChestAbertoSprite;
+	}
+    
+    if (
+	event.key.toLowerCase() === 'x' &&
+	nearNpc()
+) {
+	mostrarDialogoNpc = true;
+}
+
+}
+  
 
   
 
 	type Direction = "front" | "back" | "left" | "right";
 	let direction: Direction = "front";
     // Supondo que você tenha os sprites nessas pastas
-    const sprites = {
-        front: "/images/Sprites/png/npcs/protagonista/frente-0001.png",
-        back: "/images/Sprites/png/npcs/protagonista/costas-1.png",
-        left: "/images/Sprites/png/npcs/protagonista/ladoesquerdo-1.png",
-        right: "/images/Sprites/png/npcs/protagonista/ladodireito-1.png",
-    };
-function podeAndar(newX: number, newY: number): boolean {
-
-	// Caminho 1 - Entrada
-	if (
-		newX >= 368 && newX <= 884 &&
-		newY >= 757 && newY <= 805
-	) return true;
-
-	// Caminho 2 - Corredor central
-	if (
-		newX >= 548 && newX <= 644 &&
-		newY >= 577 && newY <= 745
-	) return true;
-
-	// Caminho 3
-	if (
-		newX >= 476 && newX <= 716 &&
-		newY >= 517 && newY <= 577
-	) return true;
-
-	// Caminho 4 - Bifurcação
-	if (
-		newX >= 344 && newX <= 740 &&
-		newY >= 481 && newY <= 517
-	) return true;
-
-	// Caminho 5
-	if (
-		newX >= 476 && newX <= 740 &&
-		newY >= 445 && newY <= 481
-	) return true;
-
-	// Caminho 6 - Corredor das pilastras
-	if (
-		newX >= 572 && newX <= 620 &&
-		newY >= 301 && newY <= 445
-	) return true;
-
-	// Caminho 7 - Portal
-	if (
-		newX >= 536 && newX <= 656 &&
-		newY >= 193 && newY <= 289
-	) return true;
-
-	// Entrada da sala dos baús
-	if (
-		newX >= 308 && newX <= 332 &&
-		newY >= 372 && newY <= 565
-	) return true;
-
-	// Sala dos baús
-	if (
-		newX >= 56 && newX <= 296 &&
-		newY >= 361 && newY <= 586
-	) return true;
-
-	// Final da sala dos baús
-	if (
-		newX >= 20 && newX <= 56 &&
-		newY >= 372 && newY <= 565
-	) return true;
-
-	return false;
-}    function move(event: KeyboardEvent): void {
-        let newX = x;
-        let newY = y;
+    
+  function move(event: KeyboardEvent): void {
+        let newX: number = x;
+        let newY: number = y;
 
         switch (event.key.toLowerCase()) {
             case "arrowup":
@@ -112,21 +96,35 @@ function podeAndar(newX: number, newY: number): boolean {
                 break;
             default:
                 return;
-        }
+        }if (colidiuWithNpc(newX, newY)) {
+	    return;
+}
 
-        
- if (podeAndar(newX, newY)) {
+if (
+	podeAndar(newX, newY) &&
+	!colidiuWithChest(newX, newY)
+) {
 	x = newX;
 	y = newY;
-}       
-    }
+}
+	// Se saiu de perto do baú, ele fecha
+	if (!nearthechest() && ChestOpen) {
+		ChestOpen = false;
+		ChestSprite = ChestFechadoSprite;
+	}
+}
+    
 
-    onMount(() => {
-        window.addEventListener("keydown", move);
-        return () => {
-            window.removeEventListener("keydown", move);
-        };
-    });
+onMount((): (() => void) => {
+  window.addEventListener("keydown", move);
+  return (): void => {
+    window.removeEventListener("keydown", move);
+  };
+});
+
+
+
+
 </script>
 
 <svelte:window on:keydown={handleKey} />
@@ -144,7 +142,19 @@ function podeAndar(newX: number, newY: number): boolean {
         alt="player"
         class="player"
         style="left: {x}px; top: {y}px;"
-    />
+    /><img
+    src={ChestSprite}
+    alt="Chest"
+    class="chest"
+    style="left: {ChestX}px; top: {ChestY}px;"
+/>
+<img
+	src={npcSprite}
+	alt="NPC"
+	class="npc"
+	style="left: {npcX}px; top: {npcY}px;"
+/>
+
 	<div class="debug">
 	X: {x}<br>
 	Y: {y}<br>
@@ -152,3 +162,17 @@ function podeAndar(newX: number, newY: number): boolean {
 </div>
 
 </div>
+{#if mostrarDialogoNpc}
+	<div class="dialogo">
+		<p>
+			Olá viajante! O portal está selado.Para Prosseguir, pegue o amuleto que está
+            dentro do baú. Você precisará dele para enfrentar os desafios que estão por vir. Boa sorte!
+		</p>
+
+		<button
+			on:click={() => mostrarDialogoNpc = false}
+		>
+			Fechar
+		</button>
+	</div>
+{/if}

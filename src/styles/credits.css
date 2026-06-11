@@ -25,8 +25,9 @@
 }
 
 .logo-ifpe {
-  width: clamp(60px, 6vw, 90px);
+  width: clamp(50px, 6vw, 50px);
   height: auto;
+  margin-top: 40px;
   margin-bottom: 20px;
 }
 
@@ -122,10 +123,10 @@
   color: #FFF3CA;
   text-align: center;
   font-family: "Pixelify Sans";
-  font-size: clamp(16px, 2vw, 30.827px);
+  font-size: clamp(16px, 2vw, 25.827px);
   font-weight: 400;
   margin: 0;
-  margin-top: -40px;
+  margin-top: -30px;
 }
 .estado {
   color: #DF60FF;
@@ -135,6 +136,7 @@
   font-weight: 400;
   margin: 0;
   margin-top: -15px;
+  margin-bottom: 40px;
 }
 
 .dev {
@@ -190,7 +192,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 6px;
   white-space: nowrap;
 }
 
@@ -205,15 +207,14 @@
 .esc img {
   width: clamp(20px, 2.5vw, 48px);
   height: auto;
+  margin-right: 8px;
 }
 
 .key {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 10px;
-  border: 3px solid #DF60FF;
-  border-radius: 4px;
+  padding: 4px 8px;
   color: #DF60FF;
   font-family: 'Pixelify Sans', monospace;
   font-size: clamp(20px, 2.5vw, 48px);

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
 
-  let selected = 0;
-  const items = ['PLAY', 'CREDITS', 'EXIT'];
+  let selected: number = 0;
+  const items: string[] = ['PLAY', 'CREDITS', 'SETTINGS'];
 
   function handleClick(index: number) {
     selected = index;

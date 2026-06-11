@@ -81,33 +81,39 @@ body {
 }
 
 .hint {
-    position: absolute;
-    bottom: 3vh;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    white-space: nowrap;
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  white-space: nowrap;
+  width: max-content;
 }
 
 .hint p {
-    color: #FFF3CA;
-    font-family: 'Pixelify Sans', monospace;
-    font-size: clamp(20px, 2.5vw, 48px);
-    font-weight: 400;
-    margin: 0;
+  color: #FFF3CA;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1;
+}
+
+.hint img {
+  width: clamp(20px, 2.5vw, 48px);
+  height: auto;
 }
 
 .key {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 10px;
-    border: 3px solid #DF60FF;
-    border-radius: 4px;
-    color: #DF60FF;
-    font-family: 'Pixelify Sans', monospace;
-    font-size: clamp(20px, 2.5vw, 48px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  color: #DF60FF;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
+  line-height: 1;
 }
