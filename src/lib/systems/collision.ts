@@ -1,30 +1,42 @@
-import { chest } from '$lib/entities/chest';
-import { npc } from '$lib/entities/npc';
-
-export function colidiuWithChest(
+export function podeAndar(
 	newX: number,
-	newY: number
+	newY: number,
+	areasPermitidas: any[]
 ): boolean {
-	const playerSize: number = 64;
-
-	return (
-		newX < chest.x + chest.hitbox.offsetX + chest.hitbox.width &&
-		newX + playerSize > chest.x + chest.hitbox.offsetX &&
-		newY < chest.y + chest.hitbox.offsetY + chest.hitbox.height &&
-		newY + playerSize > chest.y + chest.hitbox.offsetY
+	return areasPermitidas.some(area =>
+		newX >= area.xMin &&
+		newX <= area.xMax &&
+		newY >= area.yMin &&
+		newY <= area.yMax
 	);
 }
 
-export function colidiuWithNpc(
+export function colidiuComObjeto(
 	newX: number,
-	newY: number
+	newY: number,
+	objeto: any
 ): boolean {
-	const playerSize = 64;
+	const playerHitbox = {
+		offsetX: 16,
+		offsetY: 32,
+		width: 32,
+		height: 24
+	};
+
+	const playerLeft = newX + playerHitbox.offsetX;
+	const playerTop = newY + playerHitbox.offsetY;
+	const playerRight = playerLeft + playerHitbox.width;
+	const playerBottom = playerTop + playerHitbox.height;
+
+	const objLeft = objeto.x + objeto.hitbox.offsetX;
+	const objTop = objeto.y + objeto.hitbox.offsetY;
+	const objRight = objLeft + objeto.hitbox.width;
+	const objBottom = objTop + objeto.hitbox.height;
 
 	return (
-		newX < npc.x + npc.hitbox.offsetX + npc.hitbox.width &&
-		newX + playerSize > npc.x + npc.hitbox.offsetX &&
-		newY < npc.y + npc.hitbox.offsetY + npc.hitbox.height &&
-		newY + playerSize > npc.y + npc.hitbox.offsetY
+		playerLeft < objRight &&
+		playerRight > objLeft &&
+		playerTop < objBottom &&
+		playerBottom > objTop
 	);
 }
