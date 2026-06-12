@@ -45,8 +45,8 @@ td.treasure {
     image-rendering: pixelated;
 }
 .chest {
-    width: 64px;
-    height: 64px;
+    width: 32px;
+    height: 32px;
     position: absolute;
     image-rendering: pixelated;
     z-index: 5;

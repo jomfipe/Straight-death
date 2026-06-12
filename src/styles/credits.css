@@ -193,7 +193,8 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  white-space: nowrap;
+
+  padding-bottom: 10px; /* 👈 isso aqui “abaixa tudo” */
 }
 
 .esc p {
@@ -206,8 +207,9 @@
 
 .esc img {
   width: clamp(20px, 2.5vw, 48px);
-  height: auto;
-  margin-right: 8px;
+  height: 35px;
+  margin-right: 0px;
+  transform: translateY(3px);
 }
 
 .key {

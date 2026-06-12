@@ -14,14 +14,14 @@ interface ChestObject {
 }
 
 export const chest: ChestObject = {
-  x: 44,
-  y: 385,
+  x: 86,
+  y: 381,
   spriteClosed: "/images/Sprites/png/objects/Chest.png",
   spriteOpen: "/images/Sprites/png/objects/Chest-open.png",
   hitbox: {
     offsetX: 1,
     offsetY: 5,
-    width: 30,
-    height: 20
+    width: 16,
+    height: 16
   }
 };

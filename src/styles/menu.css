@@ -85,21 +85,24 @@ body {
   bottom: 3vh;
   left: 50%;
   transform: translateX(-50%);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 12px;
   white-space: nowrap;
-  width: max-content;
 }
 
 .hint p {
   color: #FFF3CA;
   font-family: 'Pixelify Sans', monospace;
   font-size: clamp(20px, 2.5vw, 48px);
-  font-weight: 400;
+
   margin: 0;
   line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .hint img {
@@ -111,9 +114,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   padding: 4px 8px;
   color: #DF60FF;
+
   font-family: 'Pixelify Sans', monospace;
   font-size: clamp(20px, 2.5vw, 48px);
+
   line-height: 1;
 }

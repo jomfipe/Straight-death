@@ -5,6 +5,7 @@
 	import { playerConfig } from '$lib/entities/player';
     import { chest } from '$lib/entities/chest';
 	import { npc } from '$lib/entities/npc';
+	  import { t } from '$lib/translator/il8n';
     
     import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
    
@@ -164,15 +165,12 @@ onMount((): (() => void) => {
 </div>
 {#if mostrarDialogoNpc}
 	<div class="dialogo">
-		<p>
-			Olá viajante! O portal está selado.Para Prosseguir, pegue o amuleto que está
-            dentro do baú. Você precisará dele para enfrentar os desafios que estão por vir. Boa sorte!
-		</p>
+		<p>{$t("npc.dialog")}</p>
 
 		<button
 			on:click={() => mostrarDialogoNpc = false}
 		>
-			Fechar
+			{$t("npc.close")}
 		</button>
 	</div>
 {/if}
