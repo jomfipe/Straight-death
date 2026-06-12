@@ -1,30 +1,24 @@
-import { chest } from '$lib/entities/chest';
-import { npc } from '$lib/entities/npc';
-
-export function colidiuWithChest(
+export function podeAndar(
 	newX: number,
-	newY: number
+	newY: number,
+	areasPermitidas: any[]
 ): boolean {
-	const playerSize: number = 64;
-
-	return (
-		newX < chest.x + chest.hitbox.offsetX + chest.hitbox.width &&
-		newX + playerSize > chest.x + chest.hitbox.offsetX &&
-		newY < chest.y + chest.hitbox.offsetY + chest.hitbox.height &&
-		newY + playerSize > chest.y + chest.hitbox.offsetY
+	return areasPermitidas.some(area =>
+		newX >= area.xMin &&
+		newX <= area.xMax &&
+		newY >= area.yMin &&
+		newY <= area.yMax
 	);
 }
 
-export function colidiuWithNpc(
+export function colidiuComObjeto(
 	newX: number,
-	newY: number
+	newY: number,
+	objeto: { x: number; y: number },
+	distancia: number = 48
 ): boolean {
-	const playerSize = 64;
-
 	return (
-		newX < npc.x + npc.hitbox.offsetX + npc.hitbox.width &&
-		newX + playerSize > npc.x + npc.hitbox.offsetX &&
-		newY < npc.y + npc.hitbox.offsetY + npc.hitbox.height &&
-		newY + playerSize > npc.y + npc.hitbox.offsetY
+		Math.abs(newX - objeto.x) < distancia &&
+		Math.abs(newY - objeto.y) < distancia
 	);
 }

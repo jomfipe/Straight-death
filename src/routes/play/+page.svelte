@@ -1,19 +1,20 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
     import { onMount } from "svelte";
-	import { podeAndar } from "$lib/maps/mausoleum";
 	import { playerConfig } from '$lib/entities/player';
     import { chest } from '$lib/entities/chest';
 	import { npc } from '$lib/entities/npc';
-    
-    import { colidiuWithChest, colidiuWithNpc } from '$lib/systems/collision';
-   
+    import {
+	podeAndar,colidiuComObjeto} from '$lib/systems/collision';
+	import { areasPermitidas } from '$lib/maps/mausoleum';
    	
 	let x: number = playerConfig.x;
 	let y: number = playerConfig.y;
 
 	const speed: number = playerConfig.speed;
 	const sprites: { front: string; back: string; left: string; right: string } = playerConfig.sprites;
+	
+
 	
 	const ChestX: number = chest.x;
 	const ChestY: number = chest.y;
@@ -68,62 +69,70 @@ function handleKey(event: KeyboardEvent): void {
 	type Direction = "front" | "back" | "left" | "right";
 	let direction: Direction = "back";
     // Supondo que você tenha os sprites nessas pastas
-    
-  function move(event: KeyboardEvent): void {
-        let newX: number = x;
-        let newY: number = y;
+    const obstaculos = [
+	chest,
+	npc
+];
 
-        switch (event.key.toLowerCase()) {
-            case "arrowup":
-            case "w":
-                newY -= speed;
-                direction = "back";
-                break;
-            case "arrowdown":
-            case "s":
-                newY += speed;
-                direction = "front";
-                break;
-            case "arrowleft":
-            case "a":
-                newX -= speed;
-                direction = "left";
-                break;
-            case "arrowright":
-            case "d":
-                newX += speed;
-                direction = "right";
-                break;
-            default:
-                return;
-        }if (colidiuWithNpc(newX, newY)) {
-	    return;
-}
+function move(event: KeyboardEvent): void {
+	let newX = x;
+	let newY = y;
 
-if (
-	podeAndar(newX, newY) &&
-	!colidiuWithChest(newX, newY)
-) {
-	x = newX;
-	y = newY;
-}
-	// Se saiu de perto do baú, ele fecha
+	switch (event.key.toLowerCase()) {
+		case "arrowup":
+		case "w":
+			newY -= speed;
+			direction = "back";
+			break;
+
+		case "arrowdown":
+		case "s":
+			newY += speed;
+			direction = "front";
+			break;
+
+		case "arrowleft":
+		case "a":
+			newX -= speed;
+			direction = "left";
+			break;
+
+		case "arrowright":
+		case "d":
+			newX += speed;
+			direction = "right";
+			break;
+
+		default:
+			return;
+	}
+
+	const bloqueado =
+		!podeAndar(newX, newY, areasPermitidas) ||
+		obstaculos.some(obj =>
+			colidiuComObjeto(newX, newY, obj)
+		);
+
+	if (!bloqueado) {
+		x = newX;
+		y = newY;
+	}
+
 	if (!nearthechest() && ChestOpen) {
 		ChestOpen = false;
 		ChestSprite = ChestFechadoSprite;
 	}
+
 }
-    
 
-onMount((): (() => void) => {
-  window.addEventListener("keydown", move);
-  return (): void => {
-    window.removeEventListener("keydown", move);
-  };
+
+	onMount(() => {
+	window.addEventListener("keydown", move);
+
+	return () => {
+		window.removeEventListener("keydown", move);
+	};
 });
-
-
-
 
 </script>
 
