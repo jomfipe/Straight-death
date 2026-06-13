@@ -6,6 +6,8 @@
 	import { npc } from '$lib/entities/npc';
 	import { areasPermitidas } from '$lib/maps/mausoleum';
 	import { podeAndar, colidiuComObjeto } from '$lib/systems/collision';
+    import { t } from '$lib/translator/il8n';
+
 
 	let x: number = playerConfig.x;
 	let y: number = playerConfig.y;
@@ -145,10 +147,10 @@
 
 {#if mostrarDialogoNpc}
 	<div class="dialogo">
-		<p>Olá viajante! O portal está selado. Para prosseguir, pegue o amuleto que está dentro do baú. Você precisará dele para enfrentar os desafios que estão por vir. Boa sorte!</p>
+		<p>{$t("npc.dialog")}</p>
 
 		<button on:click={() => (mostrarDialogoNpc = false)}>
-			Fechar
+            {$t("npc.close")}
 		</button>
 	</div>
 {/if}

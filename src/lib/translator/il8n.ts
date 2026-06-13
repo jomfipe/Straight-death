@@ -1,11 +1,11 @@
 import { writable, derived } from "svelte/store";
 
-export type Lang = "en" | "pt";
+export type Lang = "english" | "ptbr";
 
-export const lang = writable<Lang>("en");
+export const lang = writable<Lang>("english");
 
 const dict = {
-  en: {
+  english: {
     menu: {
       play: "PLAY",
       credits: "CREDITS",
@@ -42,12 +42,12 @@ const dict = {
 
     npc: {
       dialog:
-        "Hello traveler! The portal is sealed. To proceed, get the amulet from the chest.", 
+        "Hello, traveler! The portal is sealed. To proceed, take the amulet from inside the chest. You will need it to face the challenges that lie ahead. Good luck!", 
         close: "Close"
     }
   },
 
-  pt: {
+  ptbr: {
     menu: {
       play: "JOGAR",
       credits: "CRÉDITOS",
@@ -83,7 +83,7 @@ const dict = {
 
     npc: {
       dialog:
-        "Olá viajante! O portal está selado. Pegue o amuleto no baú.",
+        "Olá viajante! O portal está selado. Para prosseguir, pegue o amuleto que está dentro do baú. Você precisará dele para enfrentar os desafios que estão por vir. Boa sorte!",
       close: "Fechar"  
     }
   }
@@ -99,6 +99,6 @@ function createT(langValue: Lang) {
 export const t = derived(lang, ($lang) => createT($lang));
 
 export function toggleLang() {
-  lang.update(v => (v === "en" ? "pt" : "en"));
+  lang.update(v => (v === "english" ? "ptbr" : "english"));
 }
 

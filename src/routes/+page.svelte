@@ -41,7 +41,7 @@
 <svelte:window on:keydown={handleKey} />
 
 <div class="menu-background">
-  <img src="/images/Menu/logo.png" class="logo" />
+  <img src="/images/Menu/logo.png" class="logo" alt="logo"/>
 
   <div class="menu-box">
 
