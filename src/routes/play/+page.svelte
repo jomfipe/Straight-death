@@ -26,18 +26,21 @@
 	const npcY: number = npc.y;
 	const npcSprite: string = npc.sprite;
 	let mostrarDialogoNpc: boolean = false;
+	let npcVisivel: boolean = true;
 
 	type Direction = 'front' | 'back' | 'left' | 'right';
 	let direction: Direction = 'back';
 
-	const obstaculos = [chest, npc];
+	let obstaculos = [chest, npc];
+
+	$: obstaculos = [chest, ...(npcVisivel ? [npc] : [])];
 
 	function nearthechest(): boolean {
 		return Math.abs(x - ChestX) < 80 && Math.abs(y - ChestY) < 80;
 	}
 
 	function nearNpc(): boolean {
-		return Math.abs(x - npcX) < 80 && Math.abs(y - npcY) < 80;
+		return npcVisivel && Math.abs(x - npcX) < 80 && Math.abs(y - npcY) < 80;
 	}
 
 	function handleKey(event: KeyboardEvent): void {
@@ -48,6 +51,8 @@
 		if (event.key.toLowerCase() === 'x' && nearthechest() && !ChestOpen) {
 			ChestOpen = true;
 			ChestSprite = ChestAbertoSprite;
+			npcVisivel = false;
+			mostrarDialogoNpc = false;
 		}
 
 		if (event.key.toLowerCase() === 'x' && nearNpc()) {
@@ -132,12 +137,14 @@
 		style="left: {ChestX}px; top: {ChestY}px;"
 	/>
 
-	<img
-		src={npcSprite}
-		alt="NPC"
-		class="npc"
-		style="left: {npcX}px; top: {npcY}px;"
-	/>
+	{#if npcVisivel}
+		<img
+			src={npcSprite}
+			alt="NPC"
+			class="npc"
+			style="left: {npcX}px; top: {npcY}px;"
+		/>
+	{/if}
 
 	<div class="debug">
 		X: {x}<br />
