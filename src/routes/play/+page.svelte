@@ -43,9 +43,19 @@
 		return npcVisivel && Math.abs(x - npcX) < 80 && Math.abs(y - npcY) < 80;
 	}
 
+	function isPortalArea(nx: number, ny: number): boolean {
+		return nx >= 548 && nx <= 640 && ny >= 185 && ny <= 200;
+	}
+
 	function handleKey(event: KeyboardEvent): void {
 		if (event.key === 'Escape') {
 			goto('/');
+			return;
+		}
+
+		if (event.key.toLowerCase() === 'x' && isPortalArea(x, y)) {
+			goto('/play/corredor');
+			return;
 		}
 
 		if (event.key.toLowerCase() === 'x' && nearthechest() && !ChestOpen) {
@@ -100,6 +110,10 @@
 		if (!bloqueado) {
 			x = newX;
 			y = newY;
+
+			if (isPortalArea(x, y)) {
+				goto('/play/corredor');
+			}
 		}
 
 		if (!nearthechest() && ChestOpen) {

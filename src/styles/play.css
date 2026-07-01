@@ -36,7 +36,8 @@ td.treasure {
     overflow: hidden;
 }
 
-.mausoleum {
+.mausoleum,
+.corridor {
     width: 960px;
     height: 960px;
     position: absolute;
