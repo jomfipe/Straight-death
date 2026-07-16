@@ -385,10 +385,7 @@
 		style="left: {x}px; top: {y}px;"
 	/>
 
-	<div class="debug">
-		X: {x}<br />
-		Y: {y}<br />
-	</div>
+	
 </div>
 
 {#if mostrarPunhoMagico}

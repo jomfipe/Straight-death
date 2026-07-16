@@ -125,9 +125,5 @@
 		style="left: {x}px; top: {y}px;"
 	/>
 
-	<div class="debug">
-		X: {x}<br />
-		Y: {y}<br />
-		Entrada túnel: X 696-768 | Y 768<br />
-	</div>
+	
 </div>

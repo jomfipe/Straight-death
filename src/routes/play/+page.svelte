@@ -233,10 +233,6 @@
 		/>
 	{/if}
 
-	<div class="debug">
-		X: {x}<br />
-		Y: {y}<br />
-	</div>
 </div>
 
 {#if mostrarDialogoNpc}
