@@ -41,11 +41,7 @@
 		switch (event.key.toLowerCase()) {
 			case 'arrowup':
 			case 'w':
-				if (x === 152 && y === 505) {
-					resetGameState();
-					goto('/menu');
-					return;
-				}
+	
 				nextY -= speed;
 				direction = 'back';
 				break;
