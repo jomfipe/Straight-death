@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400..700&display=swap');
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: black;
+}
+
+.menu-background {
+    width: 100vw;
+    height: 100vh;
+    background: url('/images/Menu/background.png') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo {
+    width: 26vw;
+    height: auto;
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+    padding: 3vh 5vw;
+    border-radius: 18px;
+    border: 3px solid #FFF3CA;
+    background: linear-gradient(2deg, #2D0038 1.42%, #18101A 98.7%);
+    min-width: 30vw;
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vw;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Pixelify Sans', monospace;
+    font-size: clamp(24px, 3vw, 48px);
+    letter-spacing: 2px;
+    color: #FFF3CA;
+    padding: 8px 22px;
+    transition: 0.15s ease;
+    width: 100%;
+}
+
+.menu-button.active {
+    border: 2px dashed #cc44cc;
+    color: #DF60FF;
+    text-shadow: 0 0 8px #cc44cc88;
+}
+
+.arrow {
+    color: #cc44cc;
+    opacity: 0;
+    font-size: clamp(18px, 2vw, 36px);
+    transition: opacity 0.15s;
+}
+
+.menu-button.active .arrow {
+    opacity: 1;
+}
+
+.hint {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.hint p {
+  color: #FFF3CA;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
+
+  margin: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.hint img {
+  width: clamp(20px, 2.5vw, 48px);
+  height: auto;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 8px;
+  color: #DF60FF;
+
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(20px, 2.5vw, 48px);
+
+  line-height: 1;
+}
