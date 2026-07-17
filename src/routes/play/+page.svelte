@@ -20,7 +20,6 @@
 
 	const ChestX: number = chest.x;
 	const ChestY: number = chest.y;
-	const ChestFechadoSprite: string = chest.spriteClosed;
 	const ChestAbertoSprite: string = chest.spriteOpen;
 	let ChestSprite: string = chest.spriteClosed;
 	let ChestOpen: boolean = false;
@@ -114,8 +113,8 @@
 	}
 
 	function move(event: KeyboardEvent): void {
-		let newX = x;
-		let newY = y;
+		let newX:number = x;
+		let newY:number = y;
 
 		switch (event.key.toLowerCase()) {
 			case 'arrowup':

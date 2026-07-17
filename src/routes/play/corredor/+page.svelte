@@ -10,9 +10,9 @@
 
 	type Direction = 'front' | 'back' | 'left' | 'right';
 
-	let x = 152;
-	let y = 601;
-	let enemyDefeated = false;
+	let x :number = 152;
+	let y :number = 601;
+	let enemyDefeated :boolean = false;
 	const speed = playerConfig.speed;
 	const sprites = playerConfig.sprites;
 	const enemyX: number = firstEnemy.x;

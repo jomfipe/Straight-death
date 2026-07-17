@@ -43,7 +43,7 @@
 
 	function startBattle() {
 		const jogador: Combatente = {
-			nome: 'Sean',
+			nome: 'steve',
 			sprite: playerConfig.sprites.front,
 			hpMax: 100,
 			hp: 100,

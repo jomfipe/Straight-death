@@ -10,24 +10,24 @@
 
 	type Direction = 'front' | 'back' | 'left' | 'right';
 
-	const chestX = 696;
-	const chestY = 144;
-	const chestSpriteClosed = chest.spriteClosed;
-	const chestSpriteOpen = chest.spriteOpen;
+	const chestX :number = 696;
+	const chestY :number = 144;
+	const chestSpriteClosed:string = chest.spriteClosed;
+	const chestSpriteOpen:string = chest.spriteOpen;
 	const storageKey = 'saida-mausoleum-chest';
 	const enemyDefeatedStorageKey = 'saida-mausoleum-enemy-defeated';
 	const playerStateStorageKey = 'saida-mausoleum-player-state';
 	const gameStateStorageKey = 'saida-mausoleum-state';
-	let chestSprite = chestSpriteClosed;
-	let chestOpen = false;
+	let chestSprite  :string= chestSpriteClosed;
+	let chestOpen :boolean = false;
 	let mostrarPunhoMagico: boolean = false;
-	let enemyDefeated = false;
-	let hasLoadedState = false;
+	let enemyDefeated :boolean= false;
+	let hasLoadedState :boolean = false;
 	let unsubscribe: (() => void) | null = null;
 
 	const npcSprite = "/images/Sprites/png/npcs/secondEnemy/secondEnemy.png";
-	let enemyX = 732;
-	let enemyY = 756;
+	let enemyX :number= 732;
+	let enemyY :number= 756;
 	const npcHitbox = {
 		offsetX: 8,
 		offsetY: 12,
@@ -35,8 +35,8 @@
 		height: 52
 	};
 
-	let x = 96;
-	let y = 432;
+	let x :number = 96;
+	let y :number= 432;
 	const speed = playerConfig.speed;
 	const sprites = playerConfig.sprites;
 	let direction: Direction = 'back';

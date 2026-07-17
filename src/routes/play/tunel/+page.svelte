@@ -10,9 +10,9 @@
 	
 	type Direction = 'front' | 'back' | 'left' | 'right';
 
-	let x = 480;
-	let y = 348;
-	let showEnding = false;
+	let x :number= 480;
+	let y :number= 348;
+	let showEnding :boolean= false;
 	const speed = playerConfig.speed;
 	const sprites = playerConfig.sprites;
 	let direction: Direction = 'back';

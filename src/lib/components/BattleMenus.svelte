@@ -33,8 +33,8 @@
 	}
 
 	let tela: TelaBatalha = 'acoes';
-	let selecionado = 0;
-	let selecionadoAtaque = 0;
+	let selecionado : number = 0;
+	let selecionadoAtaque : number = 0;
 
 	function pctHp(hp: number, hpMax: number): number {
 		return Math.max(0, Math.min(100, Math.round((hp / hpMax) * 100)));
