@@ -19,12 +19,12 @@
 	$: tipoBatalha = $page.url.searchParams.get('tipo') === 'saida-mausoleum' ? 'saida-mausoleum' : 'corredor';
 	$: dialogueLines = tipoBatalha === 'saida-mausoleum'
 		? [
-			{ speaker: 'Paladin', text: 'Você chegou longe, mas este é o fim do seu caminho.', portrait: '/images/Sprites/png/npcs/secondEnemy/npcinimigodialogo.png' },
-			{ speaker: 'Sean', text: 'Eu não vou recuar!', portrait: '/images/Sprites/png/npcs/protagonista/protagonista_frentePaDialogo.png' }
+			{ speaker: 'Paladin', text: tValue('battle.paladin_line1'), portrait: '/images/Sprites/png/npcs/secondEnemy/npcinimigodialogo.png' },
+			{ speaker: 'Steve', text: tValue('battle.protagonist_line3'), portrait: '/images/Sprites/png/npcs/protagonista/protagonista_frentePaDialogo.png' }
 		]
 		: [
 			{ speaker: 'Archestry', text: tValue('battle.archestry_line1'), portrait: '/images/Sprites/png/npcs/firstEnemy/firstEnemy_frente.png' },
-			{ speaker: 'Sean', text: tValue('battle.protagonist_line1'), portrait: '/images/Sprites/png/npcs/protagonista/protagonista_frentePaDialogo.png' },
+			{ speaker: 'Steve', text: tValue('battle.protagonist_line1'), portrait: '/images/Sprites/png/npcs/protagonista/protagonista_frentePaDialogo.png' },
 			{ speaker: 'Archestry', text: tValue('battle.archestry_line2'), portrait: '/images/Sprites/png/npcs/firstEnemy/firstEnemy_frente.png' }
 		];
 
@@ -43,7 +43,7 @@
 
 	function startBattle() {
 		const jogador: Combatente = {
-			nome: 'steve',
+			nome: 'Steve',
 			sprite: playerConfig.sprites.front,
 			hpMax: 100,
 			hp: 100,

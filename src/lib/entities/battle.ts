@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { t, interpolar } from '../translator/il8n';
 
 // ---------- Tipos ----------
 
@@ -38,14 +39,25 @@ export interface EstadoBatalha {
 	tipoBatalha?: TipoBatalha;
 }
 
+// ---------- Função auxiliar de tradução ----------
+
+function traduzir(caminho: string): string {
+	const funcaoTraducao = get(t);
+	return funcaoTraducao(caminho);
+}
+
 // ---------- Fábrica de estado inicial ----------
 
 export function criarEstadoBatalha(jogador: Combatente, inimigo: Combatente, tipoBatalha: TipoBatalha = 'corredor'): EstadoBatalha {
+	const mensagemInicial: string = interpolar(traduzir('log.enemy_appeared'), {
+		enemy: inimigo.nome
+	});
+
 	return {
 		jogador: { ...jogador },
 		inimigo: { ...inimigo },
 		turno: 'jogador',
-		log: [`Um ${inimigo.nome} selvagem apareceu!`],
+		log: [mensagemInicial],
 		defendendo: false,
 		vencedor: null,
 		tipoBatalha
@@ -58,7 +70,7 @@ export const estadoBatalha = writable<EstadoBatalha | null>(null);
 
 // Função de dano com suporte a multiplicadores de habilidade
 function calcularDano(atacante: Combatente, alvo: Combatente, multiplicador: number = 1): { dano: number; acertou: boolean; critico: boolean } {
-	const base = atacante.nome === 'Protagonista'
+	const base = atacante.nome === traduzir('protagonist_name')
 		? Math.floor(Math.random() * 6) + 8
 		: (atacante.ataqueMin && atacante.ataqueMax
 			? Math.floor(Math.random() * (atacante.ataqueMax - atacante.ataqueMin + 1)) + atacante.ataqueMin
@@ -86,19 +98,22 @@ function adicionarLog(mensagem: string) {
 
 function verificarFimDeBatalha(s: EstadoBatalha): EstadoBatalha {
 	if (s.inimigo.hp <= 0) {
+		const mensagemDerrota: string = interpolar(traduzir('log.enemy_defeated'), {
+			enemy: s.inimigo.nome
+		});
 		return {
 			...s,
 			turno: 'fim',
 			vencedor: 'jogador',
 			log: [
 				...s.log,
-				`${s.inimigo.nome} foi derrotado!`,
-				'Parabéns por ter vencido... mas não comemore cedo. Os desafios adiante serão muito mais cruéis. Sua morte é certa.'
+				mensagemDerrota,
+				traduzir('log.victory_taunt')
 			]
 		};
 	}
 	if (s.jogador.hp <= 0) {
-		return { ...s, turno: 'fim', vencedor: 'inimigo', log: [...s.log, `Você foi derrotado...`] };
+		return { ...s, turno: 'fim', vencedor: 'inimigo', log: [...s.log, traduzir('log.player_defeated')] };
 	}
 	return s;
 }
@@ -109,9 +124,16 @@ function turnoDoInimigo() {
 
 		const resultado = calcularDano(s.inimigo, s.jogador);
 		const novoHp = Math.max(0, s.jogador.hp - resultado.dano);
-		const mensagem = resultado.acertou
-			? `${s.inimigo.nome} atacou e causou ${resultado.dano} de dano${resultado.critico ? ' crítico' : ''}.`
-			: `${s.inimigo.nome} errou o ataque.`;
+		const sufixoCritico: string = resultado.critico ? traduzir('log.critical_suffix') : '';
+		const mensagem: string = resultado.acertou
+			? interpolar(traduzir('log.enemy_attack_hit'), {
+				enemy: s.inimigo.nome,
+				damage: resultado.dano,
+				critical: sufixoCritico
+			})
+			: interpolar(traduzir('log.enemy_attack_miss'), {
+				enemy: s.inimigo.nome
+			});
 
 		let novo: EstadoBatalha = {
 			...s,
@@ -135,20 +157,20 @@ export function executarAcao(acao: AcaoBatalha) {
 		case 'ataque':
 		case 'golpe-de-espada': {
 			const resultado = calcularDano(atual.jogador, atual.inimigo, 1.0);
-			processarResultadoAtaque(resultado, 'Você desferiu um golpe de espada!', 'golpe-de-espada');
+			processarResultadoAtaque(resultado, traduzir('log.sword_strike_message'), 'golpe-de-espada');
 			break;
 		}
 
 		case 'punho-magico': {
 			const resultado = calcularDano(atual.jogador, atual.inimigo, 1.0);
-			processarResultadoAtaque(resultado, 'PUNHO MÁGICO! Uma explosão de energia atinge o inimigo!', 'punho-magico');
+			processarResultadoAtaque(resultado, traduzir('log.magic_fist_message'), 'punho-magico');
 			break;
 		}
 
 		case 'item': {
 			const pocoes = atual.jogador.itens?.pocao ?? 0;
 			if (pocoes <= 0) {
-				adicionarLog('Você não tem poções restantes!');
+				adicionarLog(traduzir('log.no_potions'));
 				return;
 			}
 
@@ -164,7 +186,7 @@ export function executarAcao(acao: AcaoBatalha) {
 					...s,
 					jogador: novoJogador,
 					turno: 'inimigo',
-					log: [...s.log, `Você usou uma poção e recuperou vida.`]
+					log: [...s.log, traduzir('log.used_potion')]
 				};
 				return verificarFimDeBatalha(novo);
 			});
@@ -172,16 +194,20 @@ export function executarAcao(acao: AcaoBatalha) {
 		}
 
 		case 'estatisticas': {
-			adicionarLog(`[STATUS] Você: ${atual.jogador.hp} HP | Inimigo: ${atual.inimigo.hp} HP`);
+			const mensagemStatus: string = interpolar(traduzir('log.stats'), {
+				playerHp: atual.jogador.hp,
+				enemyHp: atual.inimigo.hp
+			});
+			adicionarLog(mensagemStatus);
 			return;
 		}
 
 		case 'fugir': {
 			const sucesso = Math.random() > 0.4;
 			if (sucesso) {
-				estadoBatalha.update((s) => (s ? { ...s, turno: 'fim', vencedor: null, log: [...s.log, 'Você fugiu covardemente!'] } : s));
+				estadoBatalha.update((s) => (s ? { ...s, turno: 'fim', vencedor: null, log: [...s.log, traduzir('log.fled_success')] } : s));
 			} else {
-				estadoBatalha.update((s) => (s ? { ...s, turno: 'inimigo', log: [...s.log, 'A fuga falhou!'] } : s));
+				estadoBatalha.update((s) => (s ? { ...s, turno: 'inimigo', log: [...s.log, traduzir('log.fled_fail')] } : s));
 			}
 			break;
 		}
@@ -194,21 +220,25 @@ export function executarAcao(acao: AcaoBatalha) {
 	}
 }
 
-// Função auxiliar para atualizar o estado após um ataque do jogador
 function processarResultadoAtaque(resultado: any, mensagemBase: string, acao: AcaoBatalha) {
 	estadoBatalha.update((s) => {
 		if (!s) return s;
 		const novoHpInimigo = Math.max(0, s.inimigo.hp - resultado.dano);
 		let novoJogador = s.jogador;
-		let mensagemFinal = resultado.acertou
-			? `${mensagemBase} Dano: ${resultado.dano}${resultado.critico ? ' (CRÍTICO!)' : ''}`
-			: 'Seu ataque falhou miseravelmente.';
+
+		const sufixoCritico: string = resultado.critico ? traduzir('log.critical_label') : '';
+		let mensagemFinal: string = resultado.acertou
+			? mensagemBase + interpolar(traduzir('log.damage_result'), {
+				damage: resultado.dano,
+				critical: sufixoCritico
+			})
+			: traduzir('log.attack_missed');
 
 		if (s.tipoBatalha === 'saida-mausoleum' && acao === 'golpe-de-espada' && !s.jogador.habilidades?.recuoBloqueado) {
 			if (resultado.acertou && resultado.dano > 0) {
 				const danoRecuo = Math.max(1, Math.round(resultado.dano * 0.4));
 				novoJogador = { ...s.jogador, hp: Math.max(0, s.jogador.hp - danoRecuo) };
-				mensagemFinal += ` Você recebeu ${danoRecuo} de dano de recuo.`;
+				mensagemFinal += interpolar(traduzir('log.recoil_damage'), { damage: danoRecuo });
 			}
 		}
 
@@ -220,7 +250,7 @@ function processarResultadoAtaque(resultado: any, mensagemBase: string, acao: Ac
 					recuoBloqueado: true
 				}
 			};
-			mensagemFinal += ' O recuo foi neutralizado pelo soco mágico.';
+			mensagemFinal += traduzir('log.recoil_neutralized');
 		}
 
 		const novoEstado: EstadoBatalha = {

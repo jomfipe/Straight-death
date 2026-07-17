@@ -1,6 +1,4 @@
 <script lang="ts">
-	export const ssr = false;
-
 	import { goto } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 	import { playerConfig } from '$lib/entities/player';

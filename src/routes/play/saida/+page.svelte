@@ -7,6 +7,8 @@
 	import { areasPermitidas } from '$lib/maps/saidaMausoleum';
 	import { resetGameState } from '$lib/utils/resetGame';
 	import { saidaMausoleumState, updateSaidaMausoleumState } from '$lib/stores/saidaMausoleum';
+	import { t } from '$lib/translator/il8n';
+
 
 	type Direction = 'front' | 'back' | 'left' | 'right';
 
@@ -401,18 +403,16 @@
 				class="item-sprite"
 			/>
 
-			<p class="item-title">Você encontrou:</p>
+			<p class="item-title">{$t('chest.fist_title')}</p>
 
-			<h2 class="item-name">Punho Mágico</h2>
+			<h2 class="item-name">{$t('chest.fist_name')}</h2>
 
 			<p class="item-description">
-				Um antigo artefato envolto em energia arcana. Ao equipá-lo,
-				seus golpes passam a canalizar magia pura, aumentando
-				significativamente seu poder em combate.
+				{$t('chest.fist_description')}
 			</p>
 
 			<p class="item-hint">
-				Pressione E para continuar
+				{$t('chest.fist_hint')}
 			</p>
 		</div>
 	</div>

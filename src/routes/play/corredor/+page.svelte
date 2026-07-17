@@ -6,7 +6,7 @@
 	import { podeAndar, colidiuComObjeto } from '$lib/systems/collision';
 	import { areasPermitidas } from '$lib/maps/corredor1';
 	import { corridorState, updateCorridorState } from '$lib/stores/corridor';
-	import { resetGameState } from '$lib/utils/resetGame';
+	
 
 	type Direction = 'front' | 'back' | 'left' | 'right';
 

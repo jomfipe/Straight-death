@@ -26,7 +26,7 @@
 
 		ataques = [
 			{ id: 'golpe-de-espada', label: tValue('battle.sword_strike'), desbloqueado: true },
-			{ id: 'punho-magico', label: 'Punho Mágico', desbloqueado: ($estadoBatalha?.jogador?.habilidades?.punhoMagico) ?? false },
+			{ id: 'punho-magico', label: tValue('battle.magic_fist'), desbloqueado: ($estadoBatalha?.jogador?.habilidades?.punhoMagico) ?? false },
 			{ id: 'ataque-3' as any, label: 'X', desbloqueado: false },
 			{ id: 'ataque-4' as any, label: 'X', desbloqueado: false }
 		];

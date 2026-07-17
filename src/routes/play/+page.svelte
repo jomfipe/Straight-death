@@ -255,13 +255,12 @@
 				alt="Espada Amaldiçoada"
 				class="espada-sprite"
 			/>
-			<p class="espada-titulo">Você encontrou:</p>
-			<h2 class="espada-nome">Espada Amaldiçoada</h2>
+			<p class="espada-titulo">{$t("chest.sword_title")}</p>
+			<h2 class="espada-nome">{$t("chest.sword_name")}</h2>
 			<p class="espada-flavor">
-				Uma lâmina sedenta por sangue, forjada nas trevas deste mausoléu.
-				Ela sussurra promessas de poder... e de batalhas que virão.
+				{$t("chest.sword_flavor")}
 			</p>
-			<p class="espada-hint">Pressione E para continuar</p>
+			<p class="espada-hint">{$t("chest.sword_hint")}</p>
 		</div>
 	</div>
 {/if}
